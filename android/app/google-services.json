@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1075783979145",
+    "project_id": "timemanagement-bc395",
+    "storage_bucket": "timemanagement-bc395.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1075783979145:android:ad57ed7bdf81cc7ce6b658",
+        "android_client_info": {
+          "package_name": "com.example.timemanagment"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1075783979145-11189b4les5clc70kd3lk0n37prurdjg.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAtkgUxdLDnyL5AJtxUuh_tct-GMhV0WjA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1075783979145-11189b4les5clc70kd3lk0n37prurdjg.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
