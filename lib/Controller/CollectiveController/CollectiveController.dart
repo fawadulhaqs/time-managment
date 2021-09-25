@@ -14,8 +14,12 @@ class CollectiveController extends GetxController {
   TextEditingController logSample = TextEditingController();
   TextEditingController sapStartTime = TextEditingController();
   TextEditingController sapEndTime = TextEditingController();
+  TextEditingController sapTimeLoss = TextEditingController();
+  TextEditingController sapOtherLoss = TextEditingController();
   TextEditingController cirStartTime = TextEditingController();
   TextEditingController cirEndTime = TextEditingController();
+  TextEditingController cirTimeLoss = TextEditingController();
+  TextEditingController cirOtherLoss = TextEditingController();
   TextEditingController water1st = TextEditingController();
   TextEditingController water2nd = TextEditingController();
   TextEditingController watercir = TextEditingController();
@@ -59,7 +63,6 @@ class CollectiveController extends GetxController {
 
   DateTime sapstartingDate = DateTime.now();
   DateTime sapendingDate = DateTime.now();
-  //final sapActTime = sapendingDate.difference(sapstartingDate).inMinutes;
   DateTime cirstartingDate = DateTime.now();
   DateTime cirendingDate = DateTime.now();
 
@@ -68,8 +71,31 @@ class CollectiveController extends GetxController {
 
   int overallTime;
 
+
+  int noDelay=0;
+  int delay=0;
+
+  double per=0.00;
+
+  int totalLength;
+
   int cirDiff;
   int sapDiff;
+
+
+  String waterAll='0';
+  String costicAll='0';
+  String palmAll='0';
+  String hardAll='0';
+  String dfaAll='0';
+  String pkoAll='0';
+  String labAll='0';
+  String saltAll='0';
+  String svAll='0';
+  String turAll='0';
+  String fatAll='0';
+
+
   DateTime _selectedDate;
   RxString shiftValue = ''.obs;
   RxString baseValue = ''.obs;
@@ -83,7 +109,6 @@ class CollectiveController extends GetxController {
   String cirStdTime = '90';
   final firebaseFirestore = FirebaseFirestore.instance;
 
-  //final newUi = Get.put(NewUi());
 
   Rx<List<CollectiveModel>> collectiveList = Rx<List<CollectiveModel>>();
 
@@ -106,6 +131,7 @@ class CollectiveController extends GetxController {
       });
 
       print('length is ${retVal.length}');
+      totalLength=retVal.length;
       return retVal;
     });
   }
@@ -124,12 +150,14 @@ class CollectiveController extends GetxController {
     int overallTime,
     String sapStartTime,
     String sapEndTime,
+    String sapTimeLoss,
     String sapStdTime,
     int sapDiff,
     String saplosses,
     String sapOtherLosses,
     String cirStartTime,
     String cirEndTime,
+    String cirTimeLoss,
     String cirStdTime,
     int cirDiff,
     String cirLosses,
@@ -191,12 +219,14 @@ class CollectiveController extends GetxController {
         'OverAllTime': overallTime,
         'SapStartTime': sapStartTime,
         'SapEndTime': sapEndTime,
+        'SapTimeLoss': sapTimeLoss,
         'SapStdTime': '180',
         'SapActTime': sapDiff,
         'SapLosses': saplosses,
         'SapOtherLosses': sapOtherLosses,
         'CirStartTime': cirStartTime,
         'CirEndTime': cirEndTime,
+        'CirTimeLoss': cirTimeLoss,
         'CirStdTime': '90',
         'CirActTIme': cirDiff,
         'CirLosses': cirLosses,
@@ -204,7 +234,7 @@ class CollectiveController extends GetxController {
         'Water_1st': water1st,
         'Water_2nd': water2nd,
         'Water_Cir': watercir,
-        'Water_Cor': watercor,
+        'Water_4': watercor,
         'Caustic_1st': costic1st,
         'Caustic_2nd': costic2nd,
         'Caustic_Cir': costiccir,
@@ -260,7 +290,7 @@ class CollectiveController extends GetxController {
         baseValue.value,
         logBoiler.text,
         panValue.value,
-        logFatCharge.text,
+        fatAll,
         logStartTime.text,
         logEndTime.text,
         operatorValue.value,
@@ -268,12 +298,14 @@ class CollectiveController extends GetxController {
         overallTime,
         sapStartTime.text,
         sapEndTime.text,
+        sapTimeLoss.text,
         sapStdTime,
         sapDiff,
         sapLossesValue.value,
         sapOtherLossesValue.value,
         cirStartTime.text,
         cirEndTime.text,
+        cirTimeLoss.text,
         cirStdTime,
         cirDiff,
         cirLossesValue.value,
@@ -321,11 +353,8 @@ class CollectiveController extends GetxController {
       );
       print('Date is : $_selectedDate');
 
-      //clearController();
-
     } else {
       return;
-      //login(emailSignIn.text, passwordSignIn.text);
     }
     formKey.currentState.save;
   }
@@ -349,7 +378,8 @@ class CollectiveController extends GetxController {
             ),
             child: child,
           );
-        });
+        }
+        );
 
     if (newSelectedDate != null) {
       _selectedDate = newSelectedDate;
@@ -359,6 +389,7 @@ class CollectiveController extends GetxController {
             offset: logDate.text.length, affinity: TextAffinity.upstream));
     }
   }
+
 
   DateTime logformattedTime;
 
@@ -371,7 +402,7 @@ class CollectiveController extends GetxController {
     if (pickedTime != null) {
       print(pickedTime.format(context)); //output 10:51 PM
       DateTime parsedTime =
-          DateFormat.jm().parse(pickedTime.format(context).toString());
+      DateFormat.jm().parse(pickedTime.format(context).toString());
       //converting to DateTime so that we can further format on different pattern.
       print(parsedTime); //output 1970-01-01 22:53:00.000
       logformattedTime = parsedTime;
@@ -379,10 +410,10 @@ class CollectiveController extends GetxController {
       //DateFormat() is from intl package, you can format the time on any pattern you need.
       logstartingDate = logformattedTime;
 
-      logStartTime.text = DateFormat('kk:mm:a').format(logformattedTime);
+      logStartTime.text = DateFormat('hh:mm:ss').format(logformattedTime);
 
       //  startingDate=formattedTime;
-    } else {
+    } else{
       print("Time is not selected");
     }
   }
@@ -396,12 +427,17 @@ class CollectiveController extends GetxController {
     if (pickedTime != null) {
       print(pickedTime.format(context)); //output 10:51 PM
       DateTime parsedTime =
-          DateFormat.jm().parse(pickedTime.format(context).toString());
-
+      DateFormat.jm().parse(pickedTime.format(context).toString());
+      //converting to DateTime so that we can further format on different pattern.
+      print(parsedTime); //output 1970-01-01 22:53:00.000
       logformattedTime = parsedTime;
       print(logformattedTime); //output 14:59:00
+      //DateFormat() is from intl package, you can format the time on any pattern you need.
       logendingDate = logformattedTime;
-      logEndTime.text = DateFormat('kk:mm:a').format(logformattedTime);
+
+      logEndTime.text = DateFormat('hh:mm:ss').format(logformattedTime);
+
+      //  startingDate=formattedTime;
     } else {
       print("Time is not selected");
     }
@@ -411,6 +447,7 @@ class CollectiveController extends GetxController {
 
   sapstartTime(BuildContext context) async {
     TimeOfDay pickedTime = await showTimePicker(
+
       initialTime: TimeOfDay.now(),
       context: context,
     );
@@ -418,15 +455,15 @@ class CollectiveController extends GetxController {
     if (pickedTime != null) {
       print(pickedTime.format(context)); //output 10:51 PM
       DateTime parsedTime =
-          DateFormat.jm().parse(pickedTime.format(context).toString());
+      DateFormat.jm().parse(pickedTime.format(context).toString());
       //converting to DateTime so that we can further format on different pattern.
       print(parsedTime); //output 1970-01-01 22:53:00.000
-      sapformattedTime = parsedTime;
-      print(sapformattedTime); //output 14:59:00
+      logformattedTime = parsedTime;
+      print(logformattedTime); //output 14:59:00
       //DateFormat() is from intl package, you can format the time on any pattern you need.
-      sapstartingDate = sapformattedTime;
+      sapstartingDate = logformattedTime;
 
-      sapStartTime.text = DateFormat('kk:mm:a').format(sapformattedTime);
+      sapStartTime.text = DateFormat('hh:mm:ss').format(logformattedTime);
 
       //  startingDate=formattedTime;
     } else {
@@ -443,12 +480,17 @@ class CollectiveController extends GetxController {
     if (pickedTime != null) {
       print(pickedTime.format(context)); //output 10:51 PM
       DateTime parsedTime =
-          DateFormat.jm().parse(pickedTime.format(context).toString());
+      DateFormat.jm().parse(pickedTime.format(context).toString());
+      //converting to DateTime so that we can further format on different pattern.
+      print(parsedTime); //output 1970-01-01 22:53:00.000
+      logformattedTime = parsedTime;
+      print(logformattedTime); //output 14:59:00
+      //DateFormat() is from intl package, you can format the time on any pattern you need.
+      sapendingDate = logformattedTime;
 
-      sapformattedTime = parsedTime;
-      print(sapformattedTime); //output 14:59:00
-      sapendingDate = sapformattedTime;
-      sapEndTime.text = DateFormat('kk:mm:a').format(sapformattedTime);
+      sapEndTime.text = DateFormat('hh:mm:ss').format(logformattedTime);
+
+      //  startingDate=formattedTime;
     } else {
       print("Time is not selected");
     }
@@ -465,15 +507,15 @@ class CollectiveController extends GetxController {
     if (pickedTime != null) {
       print(pickedTime.format(context)); //output 10:51 PM
       DateTime parsedTime =
-          DateFormat.jm().parse(pickedTime.format(context).toString());
+      DateFormat.jm().parse(pickedTime.format(context).toString());
       //converting to DateTime so that we can further format on different pattern.
       print(parsedTime); //output 1970-01-01 22:53:00.000
-      cirformattedTime = parsedTime;
-      print(cirformattedTime); //output 14:59:00
+      logformattedTime = parsedTime;
+      print(logformattedTime); //output 14:59:00
       //DateFormat() is from intl package, you can format the time on any pattern you need.
-      cirstartingDate = cirformattedTime;
+      cirstartingDate = logformattedTime;
 
-      cirStartTime.text = DateFormat('kk:mm:a').format(cirformattedTime);
+      cirStartTime.text = DateFormat('hh:mm:ss').format(logformattedTime);
 
       //  startingDate=formattedTime;
     } else {
@@ -490,16 +532,17 @@ class CollectiveController extends GetxController {
     if (pickedTime != null) {
       print(pickedTime.format(context)); //output 10:51 PM
       DateTime parsedTime =
-          DateFormat.jm().parse(pickedTime.format(context).toString());
+      DateFormat.jm().parse(pickedTime.format(context).toString());
       //converting to DateTime so that we can further format on different pattern.
       print(parsedTime); //output 1970-01-01 22:53:00.000
-      cirformattedTime = parsedTime;
-      print(cirformattedTime); //output 14:59:00
+      logformattedTime = parsedTime;
+      print(logformattedTime); //output 14:59:00
       //DateFormat() is from intl package, you can format the time on any pattern you need.
-      cirendingDate = cirformattedTime;
-      cirEndTime.text = DateFormat('kk:mm:a').format(cirformattedTime);
+      cirendingDate = logformattedTime;
 
-      // endingDate=formattedTime as DateTime;
+      cirEndTime.text = DateFormat('hh:mm:ss').format(logformattedTime);
+
+      //  startingDate=formattedTime;
     } else {
       print("Time is not selected");
     }
@@ -591,5 +634,69 @@ class CollectiveController extends GetxController {
     } else {
       return null;
     }
+  }
+
+  void clearfield(){
+    logDate.clear();
+
+    logBoiler.clear();
+
+    logFatCharge.clear();
+    logStartTime.clear();
+    logEndTime.clear();
+    logSample.clear();
+    //overallTime,
+    sapStartTime.clear();
+    sapEndTime.clear();
+    sapTimeLoss.clear();
+    sapOtherLoss.clear();
+    //sapStdTime,
+    //sapDiff,
+    cirStartTime.clear();
+    cirEndTime.clear();
+    cirTimeLoss.clear();
+    cirOtherLoss.clear();
+    //cirStdTime,
+    //cirDiff,
+    water1st.clear();
+    water2nd.clear();
+    watercir.clear();
+    watercor.clear();
+    costic1st.clear();
+    costic2nd.clear();
+    costiccir.clear();
+    costiccor.clear();
+    palm1st.clear();
+    palm2nd.clear();
+    palmcir.clear();
+    palmcor.clear();
+    hard1st.clear();
+    hard2nd.clear();
+    hardcir.clear();
+    hardcor.clear();
+    dfa1st.clear();
+    dfa2nd.clear();
+    dfacir.clear();
+    dfacor.clear();
+    pko1st.clear();
+    pko2nd.clear();
+    pkocir.clear();
+    pkocor.clear();
+    lab1st.clear();
+    lab2nd.clear();
+    labcir.clear();
+    labcor.clear();
+    salt1st.clear();
+    salt2nd.clear();
+    saltcir.clear();
+    saltcor.clear();
+    sv1st.clear();
+    sv2nd.clear();
+    svcir.clear();
+    svcor.clear();
+    tur1st.clear();
+    tur2nd.clear();
+    turcir.clear();
+    turcor.clear();
   }
 }

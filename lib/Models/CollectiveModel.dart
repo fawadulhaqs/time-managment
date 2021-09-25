@@ -16,12 +16,14 @@ class CollectiveModel {
   int overall;
   String startTimeSoap;
   String endTimeSoap;
+  String saptimeLoss;
   String stdTimeSoap;
   int actTimeSoap;
   String downTimeLossSoap;
   String downTimeOtherLossSoap;
   String startTimeCir;
   String endTimeCir;
+  String cirtimeLoss;
   String stdTimeCir;
   int actTimeCir;
   String downTimeLossCir;
@@ -86,12 +88,14 @@ class CollectiveModel {
     this.downTimeOtherLossSoap,
     this.endTimeSoap,
     this.startTimeSoap,
+    this.saptimeLoss,
     this.stdTimeSoap,
     this.actTimeCir,
     this.downTimeLossCir,
     this.downTimeOtherLossCir,
     this.endTimeCir,
     this.startTimeCir,
+    this.cirtimeLoss,
     this.stdTimeCir,
     this.water1st,
     this.water2nd,
@@ -153,12 +157,14 @@ class CollectiveModel {
     overall = snapshot.data()['OverAllTime'] ?? 0;
     startTimeSoap = snapshot.data()['SapStartTime'] ?? "";
     endTimeSoap = snapshot.data()['SapEndTime'] ?? "";
+    saptimeLoss = snapshot.data()['SapTimeLoss'] ?? "";
     stdTimeSoap = snapshot.data()['SapStdTime'] ?? "";
     actTimeSoap = snapshot.data()['SapActTime'] ?? 0;
     downTimeLossSoap = snapshot.data()['SapLosses'] ?? "";
     downTimeOtherLossSoap = snapshot.data()['SapOtherLosses'] ?? "";
     startTimeCir = snapshot.data()['CirStartTime'] ?? "";
     endTimeCir = snapshot.data()['CirEndTime'] ?? "";
+    cirtimeLoss = snapshot.data()['CirTimeLoss'] ?? "";
     stdTimeCir = snapshot.data()['CirStdTime'] ?? "";
     actTimeCir = snapshot.data()['CirActTIme'] ?? "";
     downTimeLossCir = snapshot.data()['CirLosses'] ?? "";

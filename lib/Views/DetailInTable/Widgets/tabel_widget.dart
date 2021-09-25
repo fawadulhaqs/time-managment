@@ -17,7 +17,7 @@ class DetailsInTabel extends StatefulWidget {
 }
 
 class _DetailsInTabelState extends State<DetailsInTabel> {
-  List<CollectiveModel> collectiveModel;
+  //List<CollectiveModel> collectiveModel;
   final collectiveController = Get.put(CollectiveController());
 
   @override
@@ -27,6 +27,7 @@ class _DetailsInTabelState extends State<DetailsInTabel> {
 
   Widget buildDataTable() {
     final columns = [
+      'Delay',
       'Date',
       'Shift',
       'Pan',
@@ -34,8 +35,10 @@ class _DetailsInTabelState extends State<DetailsInTabel> {
       'Boiler',
       'Operator',
       'Sample',
-      'Sap. Losses',
-      'Cir. Losses',
+      'Saponification Losses',
+      'Sap Loss Time',
+      'Circulation Losses',
+      'Circulation Loss Time',
       'OverAll Time'
     ];
 
@@ -61,12 +64,28 @@ class _DetailsInTabelState extends State<DetailsInTabel> {
   List<DataRow> getRows(List<CollectiveModel> log) =>
       log.map((CollectiveModel user) {
         // int i = 0;
+        String indicator;
         // int saptimediifernce= user.actTimeSoap-180;
         //List<CommonModel> mylist = com;
+
+        if (user.overall <= 330) {
+          indicator = 'No Delay';
+          collectiveController.noDelay++;
+        } else {
+          indicator = 'Delayed ''${user.overall - 330} min';
+          collectiveController.delay++;
+        }
+        print(' NO DELAY ${collectiveController.noDelay}');
+        print(' DELAY ${collectiveController.delay}');
+        collectiveController.per =
+        ((collectiveController.noDelay / collectiveController.totalLength) *
+            100.0);
+        print('percentage ${collectiveController.per}');
         DateTime dt = DateTime.fromMicrosecondsSinceEpoch(
             user.date.microsecondsSinceEpoch);
         var formatedDate = DateFormat.yMMMd().format(dt);
         final cells = [
+          indicator,
           formatedDate,
           user.shift,
           user.panlNo,
@@ -75,7 +94,9 @@ class _DetailsInTabelState extends State<DetailsInTabel> {
           user.operator,
           user.sampleNo,
           user.downTimeLossSoap,
+          '${user.saptimeLoss} min',
           user.downTimeLossCir,
+          '${user.cirtimeLoss} min',
           '${user.overall} min/330 min',
         ];
 
@@ -90,5 +111,6 @@ class _DetailsInTabelState extends State<DetailsInTabel> {
             });
           }),
         );
-      }).toList();
+      }
+      ).toList();
 }

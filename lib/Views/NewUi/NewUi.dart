@@ -14,14 +14,9 @@ class NewUi extends StatefulWidget {
 
 class _NewUiState extends State<NewUi> {
   final GlobalKey<FormState> _myKey = GlobalKey<FormState>();
-  //final userController = Get.put(UserController());
-  //final commonController = Get.put(CommonController());
-
-  //final cicleController = Get.put(CirculationController());
 
   @override
   Widget build(BuildContext context) {
-    //final homeController = Get.put(HomeScreenController());
 
     final collectiveController = Get.put(CollectiveController());
     print(collectiveController.sapstartingDate);
@@ -34,8 +29,6 @@ class _NewUiState extends State<NewUi> {
     String stdTime1 = '180';
     collectiveController.sapDiff = sapDifference;
     int sapActual = sapDifference;
-    //final sopeController = Get.put(SponifactionController());
-    //final commoncicleController = Get.put(CommonController());
 
     print(collectiveController.cirstartingDate);
     print(collectiveController.cirendingDate);
@@ -75,16 +68,30 @@ class _NewUiState extends State<NewUi> {
         ),
         actions: <Widget>[
           IconButton(
-            padding: EdgeInsets.fromLTRB(0, 0, 20, 0),
+            padding: EdgeInsets.fromLTRB(0, 0, 70, 0),
             icon: Icon(
-              Icons.save,
+              Icons.cleaning_services_rounded,
+              size: 40,
               color: CustomColors.myBlue,
             ),
             onPressed: () {
+              collectiveController.clearfield();
+            },
+          ),
+          IconButton(
+            padding: EdgeInsets.fromLTRB(0, 0, 50, 0),
+            icon: Icon(
+              Icons.save,
+              size: 40,
+              color: CustomColors.myBlue,
+            ),
+            tooltip: 'Tap To Clear All Fields',
+            onPressed: () {
               collectiveController.onContinue(formKey: _myKey);
+              print(collectiveController.waterAll);
               //Get.back();
             },
-          )
+          ),
         ],
         centerTitle: true,
       ),
@@ -275,7 +282,7 @@ class _NewUiState extends State<NewUi> {
                                     iconSize: 20.0,
                                     style: TextStyle(
                                         color: Colors.black, fontSize: 15),
-                                    items: ['Lux', 'LifeBoy'].map(
+                                    items: ['Lux', 'LifeBoy White','LifeBoy Red'].map(
                                       (val) {
                                         return DropdownMenuItem<String>(
                                           value: val,
@@ -392,36 +399,29 @@ class _NewUiState extends State<NewUi> {
                         Expanded(
                           // optional flex property if flex is 1 because the default flex is 1
                           flex: 1,
-                          child: Card(
-                            elevation: 10,
-                            child: Padding(
-                              padding: const EdgeInsets.only(top: 2, left: 10),
-                              child: Column(
-                                children: [
-                                  Align(
-                                    alignment: Alignment.centerLeft,
-                                    child: Text('Fat Charge:',
-                                        style: TextStyle(
-                                          fontSize: 15,
-                                        )),
-                                  ),
-                                  TextFormField(
-                                    keyboardType: TextInputType.phone,
-                                    controller:
-                                        collectiveController.logFatCharge,
-                                    decoration: InputDecoration(
-                                      hintText: 'Enter Fat Charge',
-                                      hintStyle: TextStyle(
-                                          color: Colors.black54, fontSize: 15),
+                          child: Container(
+                            height: 75,
+                            child: Card(
+                              elevation: 10,
+                              child: Padding(
+                                padding: const EdgeInsets.only(top: 2, left: 10),
+                                child: Column(
+                                  children: [
+                                    Align(
+                                      alignment: Alignment.bottomLeft,
+                                      child: Text('FatCharge',
+                                          style: TextStyle(
+                                            fontSize: 15,
+                                          )),
                                     ),
-                                    style: TextStyle(
-                                        color: Colors.black, fontSize: 15),
-                                    validator: (value) {
-                                      return collectiveController
-                                          .validateFatChange(value);
-                                    },
-                                  ),
-                                ],
+                                    Text('${collectiveController.fatAll} Tons',
+                                          style: TextStyle(
+                                            fontSize: 18,
+                                          )),
+
+
+                                  ],
+                                ),
                               ),
                             ),
                           ),
@@ -688,10 +688,10 @@ class _NewUiState extends State<NewUi> {
                                       '7) Load cell t5 gasket damage/ actuator malfunction/manual valve leak',
                                       '8) Load cell pko gasket damage/ actuator malfunction/manual valve leak',
                                       '9) Lauric acid line block',
-                                      '10) Sru6 pump sealimg water low pressure',
+                                      '10) Sru6 pump sealing water low pressure',
                                       '11) Safety interlock of pump due to high pressure',
                                       '12) Safety interlock due to pan 14/15 high level sensor',
-                                      '13) leached oil unavailability',
+                                      '13) Bleached oil unavailability',
                                       '14) High temperature of lauric',
                                       '15) High temperature of PST',
                                       '16) High temperature of Palm oil',
@@ -699,12 +699,22 @@ class _NewUiState extends State<NewUi> {
                                       '18) Sap late due to load cell unavailability',
                                       '19) Sap late due to caustic late reaction',
                                       '20) Sap late due to conditions of sap not meeting',
-                                      '21) Sap late due to RO water unavilability',
+                                      '21) Sap late due to RO water unavailability',
                                       '22) Sap late due to sru 6 pump stuck',
                                       '23) Sap late due to transfer line block',
                                       '24) Sap late due to unavailability of man power',
                                       '25) Sap late due to no power supply',
-                                      '26) Sap late due to pan agitator issue'
+                                      '26) Sap late due to pan agitator issue',
+                                      '27) soap pump liquidation line block',
+                                      '28) Pump Blockage',
+                                      '29) Pump Mechanical Fault',
+                                      '30) Pump Electrical Fault of motor',
+                                      '31) Pump Electrical Fault of UFD',
+                                      '32) Pump Electrical Fault of safety Switch/ Emergency Switch',
+                                      '33) Agitator failure centre/slide',
+                                      '34) Sap late due to high Caustic',
+                                      '35) Sap late due to low Caustic',
+                                      '36) Sap late due to caustic nil'
                                     ].map(
                                       (val) {
                                         return DropdownMenuItem<String>(
@@ -727,12 +737,6 @@ class _NewUiState extends State<NewUi> {
                             ),
                           ),
                         ),
-                      ],
-                    ),
-                    Divider(),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
                         Expanded(
                           // optional flex property if flex is 1 because the default flex is 1
                           flex: 1,
@@ -743,76 +747,67 @@ class _NewUiState extends State<NewUi> {
                               child: Column(
                                 children: [
                                   Align(
-                                      alignment: Alignment.bottomLeft,
-                                      child: Text(
-                                        'Other Losses',
-                                        style: TextStyle(fontSize: 15),
-                                      )),
-                                  DropdownButtonFormField(
-                                    hint: collectiveController
-                                                .sapOtherLossesValue ==
-                                            null
-                                        ? Text('Select Reason')
-                                        : Text(
-                                            collectiveController
-                                                .sapOtherLossesValue.value,
-                                            style:
-                                                TextStyle(color: Colors.black),
-                                          ),
-                                    isExpanded: true,
-                                    iconSize: 20.0,
+                                    alignment: Alignment.centerLeft,
+                                    child: Text('Total Time Loss',
+                                        style: TextStyle(
+                                          fontSize: 15,
+                                        )),
+                                  ),
+                                  TextFormField(
+                                    keyboardType: TextInputType.phone,
+                                    controller: collectiveController.sapTimeLoss,
+                                    decoration: InputDecoration(
+                                      hintText: 'Enter Time In Minutes',
+                                      hintStyle: TextStyle(
+                                          color: Colors.black54, fontSize: 15),
+                                    ),
                                     style: TextStyle(
                                         color: Colors.black, fontSize: 15),
-                                    items: [
-                                      'None',
-                                      '1) Load cell t61 line block',
-                                      '2) Load cell t62 line block',
-                                      '3) Load cell t5 line block',
-                                      '4) Load cell pko line block',
-                                      '5) Load cell t61 gasket damage/ actuator malfunction/manual valve leak',
-                                      '6) Load cell t62 gasket damage/ actuator malfunction/manual valve leak',
-                                      '7) Load cell t5 gasket damage/ actuator malfunction/manual valve leak',
-                                      '8) Load cell pko gasket damage/ actuator malfunction/manual valve leak',
-                                      '9) Lauric acid line block',
-                                      '10) Sru6 pump sealimg water low pressure',
-                                      '11) Safety interlock of pump due to high pressure',
-                                      '12) Safety interlock due to pan 14/15 high level sensor',
-                                      '13) leached oil unavailability',
-                                      '14) High temperature of lauric',
-                                      '15) High temperature of PST',
-                                      '16) High temperature of Palm oil',
-                                      '17) Caustic feed pump problem',
-                                      '18) Sap late due to load cell unavailability',
-                                      '19) Sap late due to caustic late reaction',
-                                      '20) Sap late due to conditions of sap not meeting',
-                                      '21) Sap late due to RO water unavilability',
-                                      '22) Sap late due to sru 6 pump stuck',
-                                      '23) Sap late due to transfer line block',
-                                      '24) Sap late due to unavailability of man power',
-                                      '25) Sap late due to no power supply',
-                                      '26) Sap late due to pan agitator issue'
-                                    ].map(
-                                      (val) {
-                                        return DropdownMenuItem<String>(
-                                          value: val,
-                                          child: Text(val),
-                                        );
-                                      },
-                                    ).toList(),
-                                    validator: (value) {
-                                      return collectiveController
-                                          .validateLosses(value);
-                                    },
-                                    onChanged: (val) {
-                                      collectiveController
-                                          .sapOtherLossesValue.value = val;
-                                    },
                                   ),
                                 ],
                               ),
                             ),
                           ),
                         ),
+                      ],
+                    ),
+                    Divider(),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        Expanded(
+                          // optional flex property if flex is 1 because the default flex is 1
+                          flex: 1,
+                            child: Card(
+                              elevation: 10,
+                              child: Padding(
+                                padding: const EdgeInsets.only(top: 2, left: 10),
+                                child: Column(
+                                  children: [
+                                    Align(
+                                        alignment: Alignment.bottomLeft,
+                                        child: Text(
+                                          'Other Losses',
+                                          style: TextStyle(fontSize: 15),
+                                        )),
+                                    TextFormField(
+                                      keyboardType: TextInputType.multiline,
+                                      controller: collectiveController.sapOtherLoss,
+
+                                      decoration: InputDecoration(
+
+                                        hintText: 'Enter Time In Minutes',
+                                        hintStyle: TextStyle(
+                                            color: Colors.black54, fontSize: 15),
+                                      ),
+                                      style: TextStyle(
+                                          color: Colors.black, fontSize: 15),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
                       ],
                     ),
                     SizedBox(
@@ -965,10 +960,10 @@ class _NewUiState extends State<NewUi> {
                                       '7) Load cell t5 gasket damage/ actuator malfunction/manual valve leak',
                                       '8) Load cell pko gasket damage/ actuator malfunction/manual valve leak',
                                       '9) Lauric acid line block',
-                                      '10) Sru6 pump sealimg water low pressure',
+                                      '10) Sru6 pump sealing water low pressure',
                                       '11) Safety interlock of pump due to high pressure',
                                       '12) Safety interlock due to pan 14/15 high level sensor',
-                                      '13) leached oil unavailability',
+                                      '13) Bleached oil unavailability',
                                       '14) High temperature of lauric',
                                       '15) High temperature of PST',
                                       '16) High temperature of Palm oil',
@@ -976,12 +971,22 @@ class _NewUiState extends State<NewUi> {
                                       '18) Sap late due to load cell unavailability',
                                       '19) Sap late due to caustic late reaction',
                                       '20) Sap late due to conditions of sap not meeting',
-                                      '21) Sap late due to RO water unavilability',
+                                      '21) Sap late due to RO water unavailability',
                                       '22) Sap late due to sru 6 pump stuck',
                                       '23) Sap late due to transfer line block',
                                       '24) Sap late due to unavailability of man power',
                                       '25) Sap late due to no power supply',
-                                      '26) Sap late due to pan agitator issue'
+                                      '26) Sap late due to pan agitator issue',
+                                      '27) soap pump liquidation line block',
+                                      '28) Pump Blockage',
+                                      '29) Pump Mechanical Fault',
+                                      '30) Pump Electrical Fault of motor',
+                                      '31) Pump Electrical Fault of UFD',
+                                      '32) Pump Electrical Fault of safety Switch/ Emergency Switch',
+                                      '33) Agitator failure centre/slide',
+                                      '34) Sap late due to high Caustic',
+                                      '35) Sap late due to low Caustic',
+                                      '36) Sap late due to caustic nil'
                                     ].map(
                                       (val) {
                                         return DropdownMenuItem<String>(
@@ -998,6 +1003,38 @@ class _NewUiState extends State<NewUi> {
                                       collectiveController
                                           .cirLossesValue.value = val;
                                     },
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                        Expanded(
+                          // optional flex property if flex is 1 because the default flex is 1
+                          flex: 1,
+                          child: Card(
+                            elevation: 10,
+                            child: Padding(
+                              padding: const EdgeInsets.only(top: 2, left: 10),
+                              child: Column(
+                                children: [
+                                  Align(
+                                    alignment: Alignment.centerLeft,
+                                    child: Text('Total Time Loss',
+                                        style: TextStyle(
+                                          fontSize: 15,
+                                        )),
+                                  ),
+                                  TextFormField(
+                                    keyboardType: TextInputType.phone,
+                                    controller: collectiveController.cirTimeLoss,
+                                    decoration: InputDecoration(
+                                      hintText: 'Enter Time In Minutes',
+                                      hintStyle: TextStyle(
+                                          color: Colors.black54, fontSize: 15),
+                                    ),
+                                    style: TextStyle(
+                                        color: Colors.black, fontSize: 15),
                                   ),
                                 ],
                               ),
@@ -1025,65 +1062,16 @@ class _NewUiState extends State<NewUi> {
                                         'Other Losses',
                                         style: TextStyle(fontSize: 15),
                                       )),
-                                  DropdownButtonFormField(
-                                    hint: collectiveController
-                                                .cirOtherLossesValue ==
-                                            null
-                                        ? Text('Select Reason')
-                                        : Text(
-                                            collectiveController
-                                                .cirLossesValue.value,
-                                            style:
-                                                TextStyle(color: Colors.black),
-                                          ),
-                                    isExpanded: true,
-                                    iconSize: 20.0,
+                                  TextFormField(
+                                    keyboardType: TextInputType.multiline,
+                                    controller: collectiveController.cirOtherLoss,
+                                    decoration: InputDecoration(
+                                      hintText: 'Enter Time In Minutes',
+                                      hintStyle: TextStyle(
+                                          color: Colors.black54, fontSize: 15),
+                                    ),
                                     style: TextStyle(
                                         color: Colors.black, fontSize: 15),
-                                    items: [
-                                      'None',
-                                      '1) Load cell t61 line block',
-                                      '2) Load cell t62 line block',
-                                      '3) Load cell t5 line block',
-                                      '4) Load cell pko line block',
-                                      '5) Load cell t61 gasket damage/ actuator malfunction/manual valve leak',
-                                      '6) Load cell t62 gasket damage/ actuator malfunction/manual valve leak',
-                                      '7) Load cell t5 gasket damage/ actuator malfunction/manual valve leak',
-                                      '8) Load cell pko gasket damage/ actuator malfunction/manual valve leak',
-                                      '9) Lauric acid line block',
-                                      '10) Sru6 pump sealimg water low pressure',
-                                      '11) Safety interlock of pump due to high pressure',
-                                      '12) Safety interlock due to pan 14/15 high level sensor',
-                                      '13) leached oil unavailability',
-                                      '14) High temperature of lauric',
-                                      '15) High temperature of PST',
-                                      '16) High temperature of Palm oil',
-                                      '17) Caustic feed pump problem',
-                                      '18) Sap late due to load cell unavailability',
-                                      '19) Sap late due to caustic late reaction',
-                                      '20) Sap late due to conditions of sap not meeting',
-                                      '21) Sap late due to RO water unavilability',
-                                      '22) Sap late due to sru 6 pump stuck',
-                                      '23) Sap late due to transfer line block',
-                                      '24) Sap late due to unavailability of man power',
-                                      '25) Sap late due to no power supply',
-                                      '26) Sap late due to pan agitator issue'
-                                    ].map(
-                                      (val) {
-                                        return DropdownMenuItem<String>(
-                                          value: val,
-                                          child: Text(val),
-                                        );
-                                      },
-                                    ).toList(),
-                                    validator: (value) {
-                                      return collectiveController
-                                          .validateLosses(value);
-                                    },
-                                    onChanged: (val) {
-                                      collectiveController
-                                          .cirLossesValue.value = val;
-                                    },
                                   ),
                                 ],
                               ),
@@ -1154,7 +1142,9 @@ class _NewUiState extends State<NewUi> {
                                       hintStyle: TextStyle(
                                           color: Colors.black54, fontSize: 15),
                                     ),
-
+                                    // onChanged: (value){
+                                    //   collectiveController.water1=int.parse(value);
+                                    // },
                                     style: TextStyle(
                                         color: Colors.black, fontSize: 15),
 
@@ -1191,6 +1181,9 @@ class _NewUiState extends State<NewUi> {
                                       hintStyle: TextStyle(
                                           color: Colors.black54, fontSize: 15),
                                     ),
+                                    // onChanged: (value){
+                                    //   collectiveController.water2=int.parse(value);
+                                    // },
                                     style: TextStyle(
                                         color: Colors.black, fontSize: 15),
 
@@ -1227,6 +1220,9 @@ class _NewUiState extends State<NewUi> {
                                       hintStyle: TextStyle(
                                           color: Colors.black54, fontSize: 15),
                                     ),
+                                    // onChanged: (value){
+                                    //   collectiveController.water3=int.parse(value);
+                                    // },
                                     style: TextStyle(
                                         color: Colors.black, fontSize: 15),
 
@@ -1263,6 +1259,9 @@ class _NewUiState extends State<NewUi> {
                                       hintStyle: TextStyle(
                                           color: Colors.black54, fontSize: 15),
                                     ),
+                                    // onChanged: (value){
+                                    //   collectiveController.water4=int.parse(value);
+                                    // },
                                     style: TextStyle(
                                         color: Colors.black, fontSize: 15),
 
@@ -1275,6 +1274,21 @@ class _NewUiState extends State<NewUi> {
                             ),
                           ),
                         ),
+                        Expanded(
+                          child: Container(
+                            height: 70,
+                            decoration: BoxDecoration(border: Border.all()),
+                            child: Align(
+                                alignment: Alignment.centerLeft,
+                                child: collectiveController.waterAll == null
+                                    ? Text('Loading...')
+                                    : Text(
+                                  //child text k liye add ki ha variable k liye remove krni ha
+                                  'Total Weight : ${collectiveController.waterAll} Kg',
+                                  style: TextStyle(fontSize: 15),
+                                )),
+                          ),
+                        )
                       ],
                     ),
                     Row(
@@ -1324,6 +1338,9 @@ class _NewUiState extends State<NewUi> {
                                       hintStyle: TextStyle(
                                           color: Colors.black54, fontSize: 15),
                                     ),
+                                    // onChanged: (value){
+                                    //   collectiveController.costic1=int.parse(value);
+                                    // },
                                     style: TextStyle(
                                         color: Colors.black, fontSize: 15),
 
@@ -1360,6 +1377,9 @@ class _NewUiState extends State<NewUi> {
                                       hintStyle: TextStyle(
                                           color: Colors.black54, fontSize: 15),
                                     ),
+                                    // onChanged: (value){
+                                    //   collectiveController.costic2=int.parse(value);
+                                    // },
                                     style: TextStyle(
                                         color: Colors.black, fontSize: 15),
 
@@ -1396,6 +1416,9 @@ class _NewUiState extends State<NewUi> {
                                       hintStyle: TextStyle(
                                           color: Colors.black54, fontSize: 15),
                                     ),
+                                    // onChanged: (value){
+                                    //   collectiveController.costic3=int.parse(value);
+                                    // },
 
                                     // : Text(
                                     //   homeController.dropDownValue.value,
@@ -1407,9 +1430,6 @@ class _NewUiState extends State<NewUi> {
                                     // validator: (value) {
                                     //return homeController.validateShift(value);
                                     //},
-                                    onChanged: (val) {
-                                      // homeController.dropDownValue.value = val;
-                                    },
                                   ),
                                 ],
                               ),
@@ -1440,6 +1460,9 @@ class _NewUiState extends State<NewUi> {
                                       hintStyle: TextStyle(
                                           color: Colors.black54, fontSize: 15),
                                     ),
+                                    // onChanged: (value){
+                                    //   collectiveController.costic4=int.parse(value);
+                                    // },
 
                                     // : Text(
                                     //   homeController.dropDownValue.value,
@@ -1451,15 +1474,28 @@ class _NewUiState extends State<NewUi> {
                                     // validator: (value) {
                                     //return homeController.validateShift(value);
                                     //},
-                                    onChanged: (val) {
-                                      // homeController.dropDownValue.value = val;
-                                    },
+
                                   ),
                                 ],
                               ),
                             ),
                           ),
                         ),
+                        Expanded(
+                          child: Container(
+                            height: 70,
+                            decoration: BoxDecoration(border: Border.all()),
+                            child: Align(
+                                alignment: Alignment.centerLeft,
+                                child: collectiveController.costicAll == null
+                                    ? Text('Loading...')
+                                    : Text(
+                                  //child text k liye add ki ha variable k liye remove krni ha
+                                  'Total Weight : ${collectiveController.costicAll} Kg',
+                                  style: TextStyle(fontSize: 15),
+                                )),
+                          ),
+                        )
                       ],
                     ),
                     Row(
@@ -1509,6 +1545,9 @@ class _NewUiState extends State<NewUi> {
                                       hintStyle: TextStyle(
                                           color: Colors.black54, fontSize: 15),
                                     ),
+                                    // onChanged: (value){
+                                    //   collectiveController.palm1=int.tryParse(value)?? 0;
+                                    // },
 
                                     // : Text(
                                     //   homeController.dropDownValue.value,
@@ -1520,9 +1559,6 @@ class _NewUiState extends State<NewUi> {
                                     // validator: (value) {
                                     //return homeController.validateShift(value);
                                     //},
-                                    onChanged: (val) {
-                                      // homeController.dropDownValue.value = val;
-                                    },
                                   ),
                                 ],
                               ),
@@ -1553,6 +1589,9 @@ class _NewUiState extends State<NewUi> {
                                       hintStyle: TextStyle(
                                           color: Colors.black54, fontSize: 15),
                                     ),
+                                    // onChanged: (value){
+                                    //   collectiveController.palm2=int.tryParse(value)?? 0;
+                                    // },
 
                                     // : Text(
                                     //   homeController.dropDownValue.value,
@@ -1564,9 +1603,6 @@ class _NewUiState extends State<NewUi> {
                                     // validator: (value) {
                                     //return homeController.validateShift(value);
                                     //},
-                                    onChanged: (val) {
-                                      // homeController.dropDownValue.value = val;
-                                    },
                                   ),
                                 ],
                               ),
@@ -1597,6 +1633,9 @@ class _NewUiState extends State<NewUi> {
                                       hintStyle: TextStyle(
                                           color: Colors.black54, fontSize: 15),
                                     ),
+                                    // onChanged: (value){
+                                    //   collectiveController.palm3=int.tryParse(value)?? 0;
+                                    // },
 
                                     // : Text(
                                     //   homeController.dropDownValue.value,
@@ -1608,9 +1647,6 @@ class _NewUiState extends State<NewUi> {
                                     // validator: (value) {
                                     //return homeController.validateShift(value);
                                     //},
-                                    onChanged: (val) {
-                                      // homeController.dropDownValue.value = val;
-                                    },
                                   ),
                                 ],
                               ),
@@ -1641,6 +1677,9 @@ class _NewUiState extends State<NewUi> {
                                       hintStyle: TextStyle(
                                           color: Colors.black54, fontSize: 15),
                                     ),
+                                    // onChanged: (value){
+                                    //   collectiveController.palm4=int.tryParse(value)?? 0;
+                                    // },
 
                                     // : Text(
                                     //   homeController.dropDownValue.value,
@@ -1652,15 +1691,27 @@ class _NewUiState extends State<NewUi> {
                                     // validator: (value) {
                                     //return homeController.validateShift(value);
                                     //},
-                                    onChanged: (val) {
-                                      // homeController.dropDownValue.value = val;
-                                    },
                                   ),
                                 ],
                               ),
                             ),
                           ),
                         ),
+                        Expanded(
+                          child: Container(
+                            height: 70,
+                            decoration: BoxDecoration(border: Border.all()),
+                            child: Align(
+                                alignment: Alignment.centerLeft,
+                                child: collectiveController.palmAll == null
+                                    ? Text('Loading...')
+                                    : Text(
+                                  //child text k liye add ki ha variable k liye remove krni ha
+                                  'Total Weight : ${collectiveController.palmAll} Kg',
+                                  style: TextStyle(fontSize: 15),
+                                )),
+                          ),
+                        )
                       ],
                     ),
                     Row(
@@ -1710,7 +1761,9 @@ class _NewUiState extends State<NewUi> {
                                       hintStyle: TextStyle(
                                           color: Colors.black54, fontSize: 15),
                                     ),
-
+                                    // onChanged: (value){
+                                    //   collectiveController.hard1=int.parse(value);
+                                    // },
                                     // : Text(
                                     //   homeController.dropDownValue.value,
                                     // style: TextStyle(color: Colors.black),
@@ -1721,9 +1774,7 @@ class _NewUiState extends State<NewUi> {
                                     // validator: (value) {
                                     //return homeController.validateShift(value);
                                     //},
-                                    onChanged: (val) {
-                                      // homeController.dropDownValue.value = val;
-                                    },
+
                                   ),
                                 ],
                               ),
@@ -1754,6 +1805,9 @@ class _NewUiState extends State<NewUi> {
                                       hintStyle: TextStyle(
                                           color: Colors.black54, fontSize: 15),
                                     ),
+                                    // onChanged: (value){
+                                    //   collectiveController.hard2=int.parse(value);
+                                    // },
 
                                     // : Text(
                                     //   homeController.dropDownValue.value,
@@ -1765,9 +1819,7 @@ class _NewUiState extends State<NewUi> {
                                     // validator: (value) {
                                     //return homeController.validateShift(value);
                                     //},
-                                    onChanged: (val) {
-                                      // homeController.dropDownValue.value = val;
-                                    },
+
                                   ),
                                 ],
                               ),
@@ -1798,6 +1850,9 @@ class _NewUiState extends State<NewUi> {
                                       hintStyle: TextStyle(
                                           color: Colors.black54, fontSize: 15),
                                     ),
+                                    // onChanged: (value){
+                                    //   collectiveController.hard3=int.parse(value);
+                                    // },
 
                                     // : Text(
                                     //   homeController.dropDownValue.value,
@@ -1808,10 +1863,7 @@ class _NewUiState extends State<NewUi> {
 
                                     // validator: (value) {
                                     //return homeController.validateShift(value);
-                                    //},
-                                    onChanged: (val) {
-                                      // homeController.dropDownValue.value = val;
-                                    },
+
                                   ),
                                 ],
                               ),
@@ -1842,6 +1894,9 @@ class _NewUiState extends State<NewUi> {
                                       hintStyle: TextStyle(
                                           color: Colors.black54, fontSize: 15),
                                     ),
+                                    // onChanged: (value){
+                                    //   collectiveController.hard4=int.parse(value);
+                                    // },
 
                                     // : Text(
                                     //   homeController.dropDownValue.value,
@@ -1853,15 +1908,28 @@ class _NewUiState extends State<NewUi> {
                                     // validator: (value) {
                                     //return homeController.validateShift(value);
                                     //},
-                                    onChanged: (val) {
-                                      // homeController.dropDownValue.value = val;
-                                    },
+
                                   ),
                                 ],
                               ),
                             ),
                           ),
                         ),
+                        Expanded(
+                          child: Container(
+                            height: 70,
+                            decoration: BoxDecoration(border: Border.all()),
+                            child: Align(
+                                alignment: Alignment.centerLeft,
+                                child: collectiveController.hardAll == null
+                                    ? Text('Loading...')
+                                    : Text(
+                                  //child text k liye add ki ha variable k liye remove krni ha
+                                  'Total Weight : ${collectiveController.hardAll} Kg',
+                                  style: TextStyle(fontSize: 15),
+                                )),
+                          ),
+                        )
                       ],
                     ),
                     Row(
@@ -1911,6 +1979,9 @@ class _NewUiState extends State<NewUi> {
                                       hintStyle: TextStyle(
                                           color: Colors.black54, fontSize: 15),
                                     ),
+                                    // onChanged: (value){
+                                    //   collectiveController.dfa1=int.parse(value);
+                                    // },
 
                                     // : Text(
                                     //   homeController.dropDownValue.value,
@@ -1922,9 +1993,7 @@ class _NewUiState extends State<NewUi> {
                                     // validator: (value) {
                                     //return homeController.validateShift(value);
                                     //},
-                                    onChanged: (val) {
-                                      // homeController.dropDownValue.value = val;
-                                    },
+
                                   ),
                                 ],
                               ),
@@ -1955,6 +2024,9 @@ class _NewUiState extends State<NewUi> {
                                       hintStyle: TextStyle(
                                           color: Colors.black54, fontSize: 15),
                                     ),
+                                    // onChanged: (value){
+                                    //   collectiveController.dfa2=int.parse(value);
+                                    // },
 
                                     // : Text(
                                     //   homeController.dropDownValue.value,
@@ -1966,9 +2038,7 @@ class _NewUiState extends State<NewUi> {
                                     // validator: (value) {
                                     //return homeController.validateShift(value);
                                     //},
-                                    onChanged: (val) {
-                                      // homeController.dropDownValue.value = val;
-                                    },
+
                                   ),
                                 ],
                               ),
@@ -1999,6 +2069,9 @@ class _NewUiState extends State<NewUi> {
                                       hintStyle: TextStyle(
                                           color: Colors.black54, fontSize: 15),
                                     ),
+                                    // onChanged: (value){
+                                    //   collectiveController.dfa3=int.parse(value);
+                                    // },
 
                                     // : Text(
                                     //   homeController.dropDownValue.value,
@@ -2010,9 +2083,7 @@ class _NewUiState extends State<NewUi> {
                                     // validator: (value) {
                                     //return homeController.validateShift(value);
                                     //},
-                                    onChanged: (val) {
-                                      // homeController.dropDownValue.value = val;
-                                    },
+
                                   ),
                                 ],
                               ),
@@ -2043,6 +2114,9 @@ class _NewUiState extends State<NewUi> {
                                       hintStyle: TextStyle(
                                           color: Colors.black54, fontSize: 15),
                                     ),
+                                    // onChanged: (value){
+                                    //   collectiveController.dfa4=int.parse(value);
+                                    // },
 
                                     // : Text(
                                     //   homeController.dropDownValue.value,
@@ -2054,15 +2128,28 @@ class _NewUiState extends State<NewUi> {
                                     // validator: (value) {
                                     //return homeController.validateShift(value);
                                     //},
-                                    onChanged: (val) {
-                                      // homeController.dropDownValue.value = val;
-                                    },
+
                                   ),
                                 ],
                               ),
                             ),
                           ),
                         ),
+                        Expanded(
+                          child: Container(
+                            height: 70,
+                            decoration: BoxDecoration(border: Border.all()),
+                            child: Align(
+                                alignment: Alignment.centerLeft,
+                                child: collectiveController.dfaAll == null
+                                    ? Text('Loading...')
+                                    : Text(
+                                  //child text k liye add ki ha variable k liye remove krni ha
+                                  'Total Weight : ${collectiveController.dfaAll} Kg',
+                                  style: TextStyle(fontSize: 15),
+                                )),
+                          ),
+                        )
                       ],
                     ),
                     Row(
@@ -2112,6 +2199,9 @@ class _NewUiState extends State<NewUi> {
                                       hintStyle: TextStyle(
                                           color: Colors.black54, fontSize: 15),
                                     ),
+                                    // onChanged: (value){
+                                    //   collectiveController.pko1=int.parse(value);
+                                    // },
 
                                     // : Text(
                                     //   homeController.dropDownValue.value,
@@ -2123,9 +2213,7 @@ class _NewUiState extends State<NewUi> {
                                     // validator: (value) {
                                     //return homeController.validateShift(value);
                                     //},
-                                    onChanged: (val) {
-                                      // homeController.dropDownValue.value = val;
-                                    },
+
                                   ),
                                 ],
                               ),
@@ -2156,6 +2244,9 @@ class _NewUiState extends State<NewUi> {
                                       hintStyle: TextStyle(
                                           color: Colors.black54, fontSize: 15),
                                     ),
+                                    // onChanged: (value){
+                                    //   collectiveController.pko2=int.parse(value);
+                                    // },
 
                                     // : Text(
                                     //   homeController.dropDownValue.value,
@@ -2167,9 +2258,7 @@ class _NewUiState extends State<NewUi> {
                                     // validator: (value) {
                                     //return homeController.validateShift(value);
                                     //},
-                                    onChanged: (val) {
-                                      // homeController.dropDownValue.value = val;
-                                    },
+
                                   ),
                                 ],
                               ),
@@ -2200,6 +2289,9 @@ class _NewUiState extends State<NewUi> {
                                       hintStyle: TextStyle(
                                           color: Colors.black54, fontSize: 15),
                                     ),
+                                    // onChanged: (value){
+                                    //   collectiveController.pko3=int.parse(value);
+                                    // },
 
                                     // : Text(
                                     //   homeController.dropDownValue.value,
@@ -2211,9 +2303,7 @@ class _NewUiState extends State<NewUi> {
                                     // validator: (value) {
                                     //return homeController.validateShift(value);
                                     //},
-                                    onChanged: (val) {
-                                      // homeController.dropDownValue.value = val;
-                                    },
+
                                   ),
                                 ],
                               ),
@@ -2244,7 +2334,9 @@ class _NewUiState extends State<NewUi> {
                                       hintStyle: TextStyle(
                                           color: Colors.black54, fontSize: 15),
                                     ),
-
+                                    // onChanged: (value){
+                                    //   collectiveController.pko4=int.parse(value);
+                                    // },
                                     // : Text(
                                     //   homeController.dropDownValue.value,
                                     // style: TextStyle(color: Colors.black),
@@ -2255,15 +2347,28 @@ class _NewUiState extends State<NewUi> {
                                     // validator: (value) {
                                     //return homeController.validateShift(value);
                                     //},
-                                    onChanged: (val) {
-                                      // homeController.dropDownValue.value = val;
-                                    },
+
                                   ),
                                 ],
                               ),
                             ),
                           ),
                         ),
+                        Expanded(
+                          child: Container(
+                            height: 70,
+                            decoration: BoxDecoration(border: Border.all()),
+                            child: Align(
+                                alignment: Alignment.centerLeft,
+                                child: collectiveController.pkoAll == null
+                                    ? Text('Loading...')
+                                    : Text(
+                                  //child text k liye add ki ha variable k liye remove krni ha
+                                  'Total Weight : ${collectiveController.pkoAll} Kg',
+                                  style: TextStyle(fontSize: 15),
+                                )),
+                          ),
+                        )
                       ],
                     ),
                     Row(
@@ -2313,6 +2418,9 @@ class _NewUiState extends State<NewUi> {
                                       hintStyle: TextStyle(
                                           color: Colors.black54, fontSize: 15),
                                     ),
+                                    // onChanged: (value){
+                                    //   collectiveController.lab1=int.parse(value);
+                                    // },
 
                                     // : Text(
                                     //   homeController.dropDownValue.value,
@@ -2324,9 +2432,7 @@ class _NewUiState extends State<NewUi> {
                                     // validator: (value) {
                                     //return homeController.validateShift(value);
                                     //},
-                                    onChanged: (val) {
-                                      // homeController.dropDownValue.value = val;
-                                    },
+
                                   ),
                                 ],
                               ),
@@ -2357,6 +2463,9 @@ class _NewUiState extends State<NewUi> {
                                       hintStyle: TextStyle(
                                           color: Colors.black54, fontSize: 15),
                                     ),
+                                    // onChanged: (value){
+                                    //   collectiveController.lab2=int.parse(value);
+                                    // },
 
                                     // : Text(
                                     //   homeController.dropDownValue.value,
@@ -2368,9 +2477,7 @@ class _NewUiState extends State<NewUi> {
                                     // validator: (value) {
                                     //return homeController.validateShift(value);
                                     //},
-                                    onChanged: (val) {
-                                      // homeController.dropDownValue.value = val;
-                                    },
+
                                   ),
                                 ],
                               ),
@@ -2401,6 +2508,9 @@ class _NewUiState extends State<NewUi> {
                                       hintStyle: TextStyle(
                                           color: Colors.black54, fontSize: 15),
                                     ),
+                                    // onChanged: (value){
+                                    //   collectiveController.lab3=int.parse(value);
+                                    // },
 
                                     // : Text(
                                     //   homeController.dropDownValue.value,
@@ -2412,9 +2522,7 @@ class _NewUiState extends State<NewUi> {
                                     // validator: (value) {
                                     //return homeController.validateShift(value);
                                     //},
-                                    onChanged: (val) {
-                                      // homeController.dropDownValue.value = val;
-                                    },
+
                                   ),
                                 ],
                               ),
@@ -2445,6 +2553,9 @@ class _NewUiState extends State<NewUi> {
                                       hintStyle: TextStyle(
                                           color: Colors.black54, fontSize: 15),
                                     ),
+                                    // onChanged: (value){
+                                    //   collectiveController.lab4=int.parse(value);
+                                    // },
 
                                     // : Text(
                                     //   homeController.dropDownValue.value,
@@ -2456,15 +2567,28 @@ class _NewUiState extends State<NewUi> {
                                     // validator: (value) {
                                     //return homeController.validateShift(value);
                                     //},
-                                    onChanged: (val) {
-                                      // homeController.dropDownValue.value = val;
-                                    },
+
                                   ),
                                 ],
                               ),
                             ),
                           ),
                         ),
+                        Expanded(
+                          child: Container(
+                            height: 70,
+                            decoration: BoxDecoration(border: Border.all()),
+                            child: Align(
+                                alignment: Alignment.centerLeft,
+                                child: collectiveController.labAll == null
+                                    ? Text('Loading...')
+                                    : Text(
+                                  //child text k liye add ki ha variable k liye remove krni ha
+                                  'Total Weight : ${collectiveController.labAll} Kg',
+                                  style: TextStyle(fontSize: 15),
+                                )),
+                          ),
+                        )
                       ],
                     ),
                     Row(
@@ -2514,6 +2638,9 @@ class _NewUiState extends State<NewUi> {
                                       hintStyle: TextStyle(
                                           color: Colors.black54, fontSize: 15),
                                     ),
+                                    // onChanged: (value){
+                                    //   collectiveController.salt1=int.parse(value);
+                                    // },
 
                                     // : Text(
                                     //   homeController.dropDownValue.value,
@@ -2525,9 +2652,7 @@ class _NewUiState extends State<NewUi> {
                                     // validator: (value) {
                                     //return homeController.validateShift(value);
                                     //},
-                                    onChanged: (val) {
-                                      // homeController.dropDownValue.value = val;
-                                    },
+
                                   ),
                                 ],
                               ),
@@ -2558,6 +2683,9 @@ class _NewUiState extends State<NewUi> {
                                       hintStyle: TextStyle(
                                           color: Colors.black54, fontSize: 15),
                                     ),
+                                    // onChanged: (value){
+                                    //   collectiveController.salt2=int.parse(value);
+                                    // },
 
                                     // : Text(
                                     //   homeController.dropDownValue.value,
@@ -2569,9 +2697,7 @@ class _NewUiState extends State<NewUi> {
                                     // validator: (value) {
                                     //return homeController.validateShift(value);
                                     //},
-                                    onChanged: (val) {
-                                      // homeController.dropDownValue.value = val;
-                                    },
+
                                   ),
                                 ],
                               ),
@@ -2602,6 +2728,9 @@ class _NewUiState extends State<NewUi> {
                                       hintStyle: TextStyle(
                                           color: Colors.black54, fontSize: 15),
                                     ),
+                                    // onChanged: (value){
+                                    //   collectiveController.salt3=int.parse(value);
+                                    // },
 
                                     // : Text(
                                     //   homeController.dropDownValue.value,
@@ -2613,9 +2742,7 @@ class _NewUiState extends State<NewUi> {
                                     // validator: (value) {
                                     //return homeController.validateShift(value);
                                     //},
-                                    onChanged: (val) {
-                                      // homeController.dropDownValue.value = val;
-                                    },
+
                                   ),
                                 ],
                               ),
@@ -2646,6 +2773,9 @@ class _NewUiState extends State<NewUi> {
                                       hintStyle: TextStyle(
                                           color: Colors.black54, fontSize: 15),
                                     ),
+                                    // onChanged: (value){
+                                    //   collectiveController.salt4=int.parse(value);
+                                    // },
 
                                     // : Text(
                                     //   homeController.dropDownValue.value,
@@ -2657,15 +2787,28 @@ class _NewUiState extends State<NewUi> {
                                     // validator: (value) {
                                     //return homeController.validateShift(value);
                                     //},
-                                    onChanged: (val) {
-                                      // homeController.dropDownValue.value = val;
-                                    },
+
                                   ),
                                 ],
                               ),
                             ),
                           ),
                         ),
+                        Expanded(
+                          child: Container(
+                            height: 70,
+                            decoration: BoxDecoration(border: Border.all()),
+                            child: Align(
+                                alignment: Alignment.centerLeft,
+                                child: collectiveController.saltAll == null
+                                    ? Text('Loading...')
+                                    : Text(
+                                  //child text k liye add ki ha variable k liye remove krni ha
+                                  'Total Weight : ${collectiveController.saltAll} Kg',
+                                  style: TextStyle(fontSize: 15),
+                                )),
+                          ),
+                        )
                       ],
                     ),
                     Row(
@@ -2715,6 +2858,9 @@ class _NewUiState extends State<NewUi> {
                                       hintStyle: TextStyle(
                                           color: Colors.black54, fontSize: 15),
                                     ),
+                                    // onChanged: (value){
+                                    //   collectiveController.sv1=int.parse(value);
+                                    // },
 
                                     // : Text(
                                     //   homeController.dropDownValue.value,
@@ -2726,9 +2872,7 @@ class _NewUiState extends State<NewUi> {
                                     // validator: (value) {
                                     //return homeController.validateShift(value);
                                     //},
-                                    onChanged: (val) {
-                                      // homeController.dropDownValue.value = val;
-                                    },
+
                                   ),
                                 ],
                               ),
@@ -2759,6 +2903,9 @@ class _NewUiState extends State<NewUi> {
                                       hintStyle: TextStyle(
                                           color: Colors.black54, fontSize: 15),
                                     ),
+                                    // onChanged: (value){
+                                    //   collectiveController.sv2=int.parse(value);
+                                    // },
 
                                     // : Text(
                                     //   homeController.dropDownValue.value,
@@ -2770,9 +2917,7 @@ class _NewUiState extends State<NewUi> {
                                     // validator: (value) {
                                     //return homeController.validateShift(value);
                                     //},
-                                    onChanged: (val) {
-                                      // homeController.dropDownValue.value = val;
-                                    },
+
                                   ),
                                 ],
                               ),
@@ -2814,9 +2959,7 @@ class _NewUiState extends State<NewUi> {
                                     // validator: (value) {
                                     //return homeController.validateShift(value);
                                     //},
-                                    onChanged: (val) {
-                                      // homeController.dropDownValue.value = val;
-                                    },
+
                                   ),
                                 ],
                               ),
@@ -2847,6 +2990,9 @@ class _NewUiState extends State<NewUi> {
                                       hintStyle: TextStyle(
                                           color: Colors.black54, fontSize: 15),
                                     ),
+                                    // onChanged: (value){
+                                    //   collectiveController.sv4=int.parse(value);
+                                    // },
 
                                     // : Text(
                                     //   homeController.dropDownValue.value,
@@ -2858,15 +3004,28 @@ class _NewUiState extends State<NewUi> {
                                     // validator: (value) {
                                     //return homeController.validateShift(value);
                                     //},
-                                    onChanged: (val) {
-                                      // homeController.dropDownValue.value = val;
-                                    },
+
                                   ),
                                 ],
                               ),
                             ),
                           ),
                         ),
+                        Expanded(
+                          child: Container(
+                            height: 70,
+                            decoration: BoxDecoration(border: Border.all()),
+                            child: Align(
+                                alignment: Alignment.centerLeft,
+                                child: collectiveController.svAll == null
+                                    ? Text('Loading...')
+                                    : Text(
+                                  //child text k liye add ki ha variable k liye remove krni ha
+                                  'Total Weight : ${collectiveController.svAll} Kg',
+                                  style: TextStyle(fontSize: 15),
+                                )),
+                          ),
+                        )
                       ],
                     ),
                     Row(
@@ -2916,6 +3075,9 @@ class _NewUiState extends State<NewUi> {
                                       hintStyle: TextStyle(
                                           color: Colors.black54, fontSize: 15),
                                     ),
+                                    // onChanged: (value){
+                                    //   collectiveController.tur1=int.parse(value);
+                                    // },
 
                                     // : Text(
                                     //   homeController.dropDownValue.value,
@@ -2927,9 +3089,7 @@ class _NewUiState extends State<NewUi> {
                                     // validator: (value) {
                                     //return homeController.validateShift(value);
                                     //},
-                                    onChanged: (val) {
-                                      // homeController.dropDownValue.value = val;
-                                    },
+
                                   ),
                                 ],
                               ),
@@ -2960,6 +3120,9 @@ class _NewUiState extends State<NewUi> {
                                       hintStyle: TextStyle(
                                           color: Colors.black54, fontSize: 15),
                                     ),
+                                    // onChanged: (value){
+                                    //   collectiveController.tur2=int.parse(value);
+                                    // },
 
                                     // : Text(
                                     //   homeController.dropDownValue.value,
@@ -2971,9 +3134,7 @@ class _NewUiState extends State<NewUi> {
                                     // validator: (value) {
                                     //return homeController.validateShift(value);
                                     //},
-                                    onChanged: (val) {
-                                      // homeController.dropDownValue.value = val;
-                                    },
+
                                   ),
                                 ],
                               ),
@@ -3004,6 +3165,9 @@ class _NewUiState extends State<NewUi> {
                                       hintStyle: TextStyle(
                                           color: Colors.black54, fontSize: 15),
                                     ),
+                                    // onChanged: (value){
+                                    //   collectiveController.tur3=int.parse(value);
+                                    // },
 
                                     // : Text(
                                     //   homeController.dropDownValue.value,
@@ -3015,9 +3179,7 @@ class _NewUiState extends State<NewUi> {
                                     // validator: (value) {
                                     //return homeController.validateShift(value);
                                     //},
-                                    onChanged: (val) {
-                                      // homeController.dropDownValue.value = val;
-                                    },
+
                                   ),
                                 ],
                               ),
@@ -3048,6 +3210,9 @@ class _NewUiState extends State<NewUi> {
                                       hintStyle: TextStyle(
                                           color: Colors.black54, fontSize: 15),
                                     ),
+                                    // onChanged: (value){
+                                    //   collectiveController.tur4=int.parse(value);
+                                    // },
 
                                     // : Text(
                                     //   homeController.dropDownValue.value,
@@ -3059,20 +3224,83 @@ class _NewUiState extends State<NewUi> {
                                     // validator: (value) {
                                     //return homeController.validateShift(value);
                                     //},
-                                    onChanged: (val) {
-                                      // homeController.dropDownValue.value = val;
-                                    },
+
                                   ),
                                 ],
                               ),
                             ),
                           ),
                         ),
+                        Expanded(
+                          child: Container(
+                            height: 70,
+                            decoration: BoxDecoration(border: Border.all()),
+                            child: Align(
+                              alignment: Alignment.centerLeft,
+                                child: collectiveController.turAll == null
+                                    ? Text('Loading...')
+                                    : Text(
+                                  //child text k liye add ki ha variable k liye remove krni ha
+                                  'Total Weight : ${collectiveController.turAll} Kg',
+                                  style: TextStyle(fontSize: 15),
+                                )),
+                          ),
+                        )
                       ],
                     ),
                     SizedBox(
                       height: 50,
                     ),
+                    Row(
+                      children: [
+                        Expanded(
+                            child: RaisedButton(
+                              elevation: 10,
+                              child: Text("Calculate Quantity of Ingredients"),
+                              onPressed : () {
+                                int waterSum=0;
+                                int causticSum=0;
+                                int palmSum=0;
+                                int hardSum=0;
+                                int dfaSum=0;
+                                int pkoSum=0;
+                                int labSum=0;
+                                int saltSum=0;
+                                int svSum=0;
+                                int turSum=0;
+                                double fatCharge=0;
+
+                                setState(() {
+                                  waterSum = int.tryParse(collectiveController.water1st.text) + int.tryParse(collectiveController.water2nd.text) + int.tryParse(collectiveController.watercir.text) + int.tryParse(collectiveController.watercor.text);
+                                  collectiveController.waterAll = waterSum.toString();
+                                   causticSum = int.tryParse(collectiveController.costic1st.text) + int.tryParse(collectiveController.costic2nd.text) + int.tryParse(collectiveController.costiccir.text)+ int.tryParse(collectiveController.costiccor.text);
+                                  collectiveController.costicAll = causticSum.toString();
+                                   palmSum = int.tryParse(collectiveController.palm1st.text) + int.tryParse(collectiveController.palm2nd.text) + int.tryParse(collectiveController.palmcir.text) + int.tryParse(collectiveController.palmcor.text);
+                                  collectiveController.palmAll = palmSum.toString();
+                                   hardSum = int.tryParse(collectiveController.hard1st.text) + int.tryParse(collectiveController.hard2nd.text) + int.tryParse(collectiveController.hardcir.text) + int.tryParse(collectiveController.hardcor.text);
+                                  collectiveController.hardAll = hardSum.toString();
+                                   dfaSum = int.tryParse(collectiveController.dfa1st.text) + int.tryParse(collectiveController.dfa2nd.text) + int.tryParse(collectiveController.dfacir.text) + int.tryParse(collectiveController.dfacor.text);
+                                  collectiveController.dfaAll = dfaSum.toString();
+                                   pkoSum = int.tryParse(collectiveController.pko1st.text) + int.tryParse(collectiveController.pko2nd.text) + int.tryParse(collectiveController.pkocir.text) + int.tryParse(collectiveController.pkocor.text);
+                                  collectiveController.pkoAll = pkoSum.toString();
+                                   labSum = int.tryParse(collectiveController.lab1st.text) + int.tryParse(collectiveController.lab2nd.text) + int.tryParse(collectiveController.labcir.text) + int.tryParse(collectiveController.labcor.text);
+                                  collectiveController.labAll = labSum.toString();
+                                   saltSum = int.tryParse(collectiveController.salt1st.text) + int.tryParse(collectiveController.salt2nd.text) + int.tryParse(collectiveController.saltcir.text) + int.tryParse(collectiveController.saltcor.text);
+                                  collectiveController.saltAll = saltSum.toString();
+                                   svSum = int.tryParse(collectiveController.sv1st.text) + int.tryParse(collectiveController.sv2nd.text) + int.tryParse(collectiveController.svcir.text) + int.tryParse(collectiveController.svcor.text);
+                                  collectiveController.svAll = svSum.toString();
+                                   turSum = int.tryParse(collectiveController.tur1st.text) + int.tryParse(collectiveController.tur2nd.text) + int.tryParse(collectiveController.turcir.text) + int.tryParse(collectiveController.turcor.text);
+                                  collectiveController.turAll = turSum.toString();
+                                  fatCharge= ((palmSum+hardSum+dfaSum+pkoSum)/1000);
+                                  collectiveController.fatAll=fatCharge.toString();
+                                });
+                                print('$waterSum $causticSum');
+                              },
+                            )
+
+                        )
+                      ],
+                    )
                   ])),
             ),
           ]),

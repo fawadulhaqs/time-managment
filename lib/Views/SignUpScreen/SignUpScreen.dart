@@ -42,9 +42,9 @@ class SignUpScreen extends StatelessWidget {
                             width: 70,
                             child: SvgPicture.asset('assets/images/uniii.svg')),
                       ),
-                      // UserImagePicker(
-                      //   imagePickedFn: _pickedImage,
-                      // ),
+                      UserImagePicker(
+                        imagePickedFn: _pickedImage,
+                      ),
                       Card(
                         elevation: 3,
                         child: Padding(

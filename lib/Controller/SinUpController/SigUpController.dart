@@ -58,10 +58,10 @@ class SignUpController extends GetxController {
 
   void onSignUp(_formkey) {
     final isvalid = _formkey.currentState.validate();
-    //if(userImage==null){
-    // Get.snackbar('Error', 'We could found the image');
-    // return;
-    //}
+    if (userImage == null) {
+      Get.snackbar('Error', 'We could found the image');
+      return;
+    }
     if (!isvalid) {
       Get.snackbar('Error', 'Form is incomplete');
       return;
@@ -84,6 +84,9 @@ class SignUpController extends GetxController {
           password: password,
           phoneNo: phoneNo);
       Get.back();
+      // if (userImage = null) {
+      //   Get.snackbar('No Image', ' No Image found');
+      // }
       if (await MyDatabase().createUser(userModel)) {
         Get.find<UserController>().user = userModel;
       }

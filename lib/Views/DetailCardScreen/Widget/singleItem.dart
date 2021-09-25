@@ -20,7 +20,7 @@ class SingleCard extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 20),
         child: Container(
-          height: 300,
+          height: 350,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
