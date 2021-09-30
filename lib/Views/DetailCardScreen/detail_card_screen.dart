@@ -1,13 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:timemanagment/Controller/CollectiveController/CollectiveController.dart';
+import 'package:timemanagment/Models/CollectiveModel.dart';
 import 'package:timemanagment/Views/welcomScreen/widget/drawers.dart';
 
 import '../../constans/Colors.dart';
+import 'TestCard.dart';
 import 'Widget/singleItem.dart';
 
-class DetailCardScreen extends StatelessWidget {
+class DetailCardScreen extends StatefulWidget {
   DetailCardScreen({Key key}) : super(key: key);
+
+  @override
+  _DetailCardScreenState createState() => _DetailCardScreenState();
+}
+
+class _DetailCardScreenState extends State<DetailCardScreen> {
   final collectiveController = Get.put(CollectiveController());
 
   @override
@@ -50,7 +58,11 @@ class DetailCardScreen extends StatelessWidget {
         centerTitle: true,
       ),
       drawer: MyDrawer(),
-      body: SingleChildScrollView(
+      body:
+      // ListPage()
+
+
+      SingleChildScrollView(
         child: Column(
           children: [
             GetX<CollectiveController>(
@@ -58,17 +70,25 @@ class DetailCardScreen extends StatelessWidget {
               builder: (CollectiveController collectiveController) {
                 if (collectiveController != null &&
                     collectiveController.log != null) {
-                  return Container(
-                    height: size.height / 1.2,
-                    child: ListView.builder(
-                        shrinkWrap: true,
-                        scrollDirection: Axis.vertical,
-                        itemCount: collectiveController.log.length,
-                        itemBuilder: (context, index) {
-                          return SingleCard(
-                            collectiveModel: collectiveController.log[index],
-                          );
-                        }),
+                  return SingleChildScrollView(
+                    child: Container(
+                      height: size.height / 1.2,
+                      child: Scrollbar(
+                        showTrackOnHover: true,
+                        thickness: 10,
+                        hoverThickness: 10,
+                        child: ListView.builder(
+                            shrinkWrap: true,
+                            scrollDirection: Axis.vertical,
+                            itemCount: collectiveController.log.length,
+                            itemBuilder: (context, index) {
+                              return MyCard(
+                                collectiveModel: collectiveController.log[index],
+
+                              );
+                            }),
+                      ),
+                    ),
                   );
                 } else {
                   return Text(
@@ -84,3 +104,4 @@ class DetailCardScreen extends StatelessWidget {
     );
   }
 }
+

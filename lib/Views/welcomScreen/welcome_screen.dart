@@ -2,9 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:timemanagment/Views/Analytics/Analytics.dart';
 import 'package:timemanagment/Controller/CollectiveController/CollectiveController.dart';
-import 'package:timemanagment/Views/DetailInTable/Widgets/tabel_widget.dart';
-import 'package:timemanagment/Views/DetailInTable/tabel_main_screen.dart';
-import 'package:timemanagment/Views/NewUi/NewUi.dart';
+import 'package:timemanagment/Views/NewUi/SecondUi.dart';
 import 'package:timemanagment/Views/SelectSheetToView/slect_sheet_to_view.dart';
 import 'package:timemanagment/Views/welcomScreen/widget/drawers.dart';
 import 'package:timemanagment/constans/Colors.dart';
@@ -98,7 +96,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                         TextButton(
                           onPressed: () {
                             //Get.put(CollectiveController());
-                            Get.to(() =>NewUi());
+                            Get.to(() =>SecondUi());
                           },
                           child: const Text('CREATE LOG',style: TextStyle(color: CustomColors.myBlue)),
                         ),

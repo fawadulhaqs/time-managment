@@ -5,7 +5,6 @@ import 'package:get/get.dart';
 import 'package:timemanagment/Controller/SignInController/SignInController.dart';
 import 'package:timemanagment/Controller/user_controller.dart';
 import 'package:timemanagment/Views/SignUpScreen/SignUpScreen.dart';
-import 'package:timemanagment/Views/welcomScreen/welcome_screen.dart';
 import 'package:timemanagment/constans/Colors.dart';
 
 class LoginScreen extends StatelessWidget {

@@ -72,7 +72,7 @@ class _DetailsInTabelState extends State<DetailsInTabel> {
           indicator = 'No Delay';
           collectiveController.noDelay++;
         } else {
-          indicator = 'Delayed ''${user.overall - 330} min';
+          indicator = 'Delayed ${user.overall - 330} min';
           collectiveController.delay++;
         }
         print(' NO DELAY ${collectiveController.noDelay}');
@@ -102,13 +102,34 @@ class _DetailsInTabelState extends State<DetailsInTabel> {
 
         return DataRow(
           cells: Utils.modelBuilder(cells, (index, cell) {
-            return DataCell(
+            if(cell == "No Delay") {
+              return DataCell(
+                Icon(Icons.check_box ,color: Colors.green),
+                onTap: () {
+                // Get.snackbar('Tap', 'You tapped on $cell $cells');
+              },
+              );
+            }
+            else if(cell == "Delayed ${user.overall - 330} min") {
+              return DataCell(
+
+                Icon(
+                    Icons.warning ,color: Colors.red),
+                onTap: () {
+                  Get.snackbar('Delayed','Delayed by ${user.overall - 330} min');
+                },
+              );
+            }
+            else{
+              return DataCell(
                 Text(
                   '$cell ',
-                  style: TextStyle(fontSize: 16),
+                  style: TextStyle(fontSize: 16,color: Colors.black),
                 ), onTap: () {
-              Get.snackbar('Tap', 'You tapped on $cell');
-            });
+                // Get.snackbar('Tap', 'You tapped on $cell $cells');
+              },
+              );
+            }
           }),
         );
       }

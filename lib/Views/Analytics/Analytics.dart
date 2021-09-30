@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:intl/intl.dart';
 import 'package:timemanagment/Controller/CollectiveController/CollectiveController.dart';
-import 'package:timemanagment/Models/CollectiveModel.dart';
 import 'package:syncfusion_flutter_gauges/gauges.dart';
-import 'package:timemanagment/Views/Utils/utils.dart';
 import 'package:timemanagment/constans/Colors.dart';
 
 class Analytics extends StatefulWidget {
@@ -51,64 +48,70 @@ class _AnalyticsState extends State<Analytics> {
                     ),
                   ),
                   Divider(),
-                  Padding(
-                    padding: const EdgeInsets.all(10.0),
-                    child: Container(
-                      height: 400,
-                      // width: 350,
+                  Row(
+                    children: [
+                      Expanded(
+                        child: Padding(
+                          padding: const EdgeInsets.all(10.0),
+                          child: Container(
+                            height: 400,
+                            // width: 350,
 
-                      child: Card(
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20.0),
-                        ),
-                        child: SfRadialGauge(
-                            axes: <RadialAxis>[
-                              RadialAxis(minimum: 0,
-                                  maximum: 100,
-                                  ranges: <GaugeRange>[
-                                    GaugeRange(startValue: 0,
-                                        endValue: 33,
-                                        color: Colors.red,
-                                        startWidth: 10,
-                                        endWidth: 10),
-                                    GaugeRange(startValue: 33,
-                                        endValue: 66,
-                                        color: Colors.orange,
-                                        startWidth: 10,
-                                        endWidth: 10),
-                                    GaugeRange(startValue: 66,
-                                        endValue: 100,
-                                        color: Colors.green,
-                                        startWidth: 10,
-                                        endWidth: 10)
-                                  ],
-                                  pointers: <GaugePointer>[
-                                    NeedlePointer(
-                                      value: collectiveController.per,
-                                      enableAnimation: true,
-                                      animationDuration: 2500.0,
-                                      animationType: AnimationType.elasticOut,
+                            child: Card(
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(20.0),
+                              ),
+                              child: SfRadialGauge(
+                                  axes: <RadialAxis>[
+                                    RadialAxis(minimum: 0,
+                                        maximum: 100,
+                                        ranges: <GaugeRange>[
+                                          GaugeRange(startValue: 0,
+                                              endValue: 33,
+                                              color: Colors.red,
+                                              startWidth: 10,
+                                              endWidth: 10),
+                                          GaugeRange(startValue: 33,
+                                              endValue: 66,
+                                              color: Colors.orange,
+                                              startWidth: 10,
+                                              endWidth: 10),
+                                          GaugeRange(startValue: 66,
+                                              endValue: 100,
+                                              color: Colors.green,
+                                              startWidth: 10,
+                                              endWidth: 10)
+                                        ],
+                                        pointers: <GaugePointer>[
+                                          NeedlePointer(
+                                            value: collectiveController.per,
+                                            enableAnimation: true,
+                                            animationDuration: 2500.0,
+                                            animationType: AnimationType.elasticOut,
+                                          )
+                                        ],
+                                        annotations: <GaugeAnnotation>[
+                                          GaugeAnnotation(widget: Container(child:
+                                          Text('${collectiveController.per.toStringAsFixed(2)}%',
+                                              style: TextStyle(fontSize: 25,
+                                                  fontWeight: FontWeight.bold))),
+                                              angle: 90, positionFactor: 0.5)
+                                        ]
                                     )
                                   ],
-                                  annotations: <GaugeAnnotation>[
-                                    GaugeAnnotation(widget: Container(child:
-                                    Text('${collectiveController.per.toStringAsFixed(2)}%',
-                                        style: TextStyle(fontSize: 25,
-                                            fontWeight: FontWeight.bold))),
-                                        angle: 90, positionFactor: 0.5)
-                                  ]
-                              )
-                            ],
-                            title: GaugeTitle(
-                                text: 'Work Efficiency', textStyle: TextStyle(
-                                fontSize: 20.0, fontWeight: FontWeight.bold))
+                                  title: GaugeTitle(
+                                      text: 'Work Efficiency', textStyle: TextStyle(
+                                      fontSize: 20.0, fontWeight: FontWeight.bold))
+                              ),
+
+                              color: Colors.white,
+                              elevation: 10,
+                            ),
+
+                          ),
                         ),
-
-                        color: Colors.white,
-                        elevation: 10,
                       ),
-
-                    ),
+                    ],
                   ),
                   SizedBox(height: 10,),
                   Padding(
